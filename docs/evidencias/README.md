@@ -5,16 +5,17 @@ Este diretorio concentra a estrategia de rastreabilidade documental do projeto.
 ## Regra geral
 
 - cada modulo possui uma pasta propria em `docs/evidencias/<modulo>/`;
-- o repositório armazena apenas o indice, os links oficiais e a convencao de cache;
-- os PDFs oficiais ficam em um endpoint/fonte oficial do BACEN ou em cache externo fora do git;
+- o repositório armazena o indice, o manifest machine-readable e a convencao de cache;
+- os PDFs oficiais ficam em endpoints/fonte oficial do BACEN, do Planalto ou do Coaf, ou em cache externo fora do git;
 - cada pasta tem um `README.md` com o mapeamento entre norma, endpoint e uso no codigo;
 - toda regra implementada deve apontar para pelo menos uma evidencia primaria.
 
-## Estrutura padrao
+## Estrutura
 
 ```text
 docs/evidencias/
 ├── README.md
+├── manifest.yml
 ├── commons/
 │   └── README.md
 ├── recebiveis-cartao/
@@ -36,6 +37,26 @@ docs/evidencias/
 └── drex/
     └── README.md
 ```
+
+## Manifest
+
+O arquivo [manifest.yml](manifest.yml) e a fonte estruturada de todas as normas
+utilizadas como evidencia. A pagina abaixo e o indice humano para navegacao rapida.
+
+## Indice
+
+| Modulo | Evidencia | Status |
+|--------|-----------|--------|
+| [Commons](commons/README.md) | Validacao compartilhada de CPF/CNPJ | Indireta |
+| [Recebiveis de Cartao](recebiveis-cartao/README.md) | Res. 4.734, Carta/Circular 3.952, Circ. 4.016, Res. BCB 264 | Direta |
+| [PIX](pix/README.md) | Res. BCB 1, 80, 142, 191, 316 | Direta, com itens a revisar |
+| [Open Finance](open-finance/README.md) | Res. BCB 32, 57, 97, 316, IN 266 | Direta, com itens a revisar |
+| [Arranjos de Pagamento](arranjos-pagamento/README.md) | Res. CMN 4.282, Lei 12.865, Res. BCB 150, 195 | Direta |
+| [PLD/FT](pld-ft/README.md) | Lei 9.613, Circular 3.978, Res. BCB 277, Res. COAF 36 | Direta |
+| [Câmbio](cambio/README.md) | Res. BCB 277, Circular 3.691 | Direta |
+| [Crédito](credito/README.md) | Res. CMN 4.558, 4.966, Circular 3.953, Doc 3040 | Direta |
+| [SPB](spb/README.md) | Lei 10.214 | Direta |
+| [DREX](drex/README.md) | Drex / Real Digital | Direta, sem norma final consolidada |
 
 ## Convencao de cache
 
@@ -67,17 +88,5 @@ Cada `README.md` de modulo deve registrar:
 - nao substituir PDF oficial por captura de tela ou anotacao informal;
 - quando a norma mudar, adicionar novo PDF em vez de sobrescrever o antigo;
 - manter o historico para auditoria e comparacao de versoes;
-- no caso de normas sem consolidacao final, usar o documento mais recente e registrar a pendencia.
-
-## Status por modulo
-
-- `commons`: nao possui norma propria; evidencia e indireta, via modulos consumidores.
-- `recebiveis-cartao`: possui resolucao, circulares e atualizacao normativa.
-- `pix`: possui conjunto normativo consolidado e exemplos operacionais.
-- `open-finance`: possui resolucoes e instrucao tecnica.
-- `arranjos-pagamento`: possui marco legal e resolucoes de vigilancia.
-- `pld-ft`: possui lei, circular, resolucao e regras de comunicacao.
-- `cambio`: possui resolucao e circular operacional.
-- `credito`: possui resolucoes, circular do IPOC e instrucoes do Doc 3040.
-- `spb`: possui lei do sistema de pagamentos.
-- `drex`: ainda depende de documentos oficiais e diretrizes publicadas, sem consolidacao final.
+- no caso de normas sem consolidacao final, usar o documento mais recente e registrar a pendencia;
+- quando a documentacao do modulo estiver desatualizada, marcar a entrada no manifest como `needs_review`.

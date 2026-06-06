@@ -1,0 +1,166 @@
+version: 1
+generated_from: repository-docs
+modules:
+  commons:
+    status: indirect
+    notes:
+      - shared CPF/CNPJ validation is consumed by other regulatory domains
+  recebiveis-cartao:
+    status: active
+    norms:
+      - id: cmn-4734-2019
+        title: Resolução CMN 4.734/2019
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=4734&tipo=Resolu%C3%A7%C3%A3o
+      - id: bc-3952-2019
+        title: Carta Circular 3.952/2019
+        kind: circular
+        official_url: https://normativos.bcb.gov.br/Lists/Normativos/Attachments/50773/C_Circ_3952_v1_O.pdf
+      - id: bc-4016-2020
+        title: Circular BCB 4.016/2020
+        kind: circular
+        official_url: https://normativos.bcb.gov.br/Lists/Normativos/Attachments/51026/Circ_4016_v2_L.pdf
+      - id: bcb-264-2022
+        title: Resolução BCB 264/2022
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=264&tipo=Resolu%C3%A7%C3%A3o+BCB
+  pix:
+    status: active
+    norms:
+      - id: bcb-1-2020
+        title: Resolução BCB 1/2020
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=1&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-80-2021
+        title: Resolução BCB 80/2021
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=80&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-142-2021
+        title: Resolução BCB 142/2021
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=142&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-191-2022
+        title: Resolução BCB 191/2022
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=191&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-316-2023
+        title: Resolução BCB 316/2023
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=316&tipo=Resolu%C3%A7%C3%A3o+BCB
+        review: true
+        note: "Confirmar aderencia exata da referencia ao escopo Pix no README do modulo."
+  open-finance:
+    status: active
+    norms:
+      - id: bcb-32-2020
+        title: Resolução BCB 32/2020
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=32&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-57-2021
+        title: Resolução BCB 57/2021
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=57&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-97-2021
+        title: Resolução BCB 97/2021
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=97&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-316-2023
+        title: Resolução BCB 316/2023
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=316&tipo=Resolu%C3%A7%C3%A3o+BCB
+        review: true
+        note: "A referencia do modulo precisa ser validada; manter o link oficial ate revisao do README."
+      - id: in-bcb-266-2022
+        title: Instrução Normativa BCB 266/2022
+        kind: instruction
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=266&tipo=Instru%C3%A7%C3%A3o+Normativa+BCB
+        review: true
+        note: "A correspondencia com Open Finance no README do modulo precisa ser revisada."
+  arranjos-pagamento:
+    status: active
+    norms:
+      - id: cmn-4282-2013
+        title: Resolução CMN 4.282/2013
+        kind: resolution
+        official_url: https://normativos.bcb.gov.br/Lists/Normativos/Attachments/48841/Res_4282_v3_P.pdf
+      - id: lei-12865-2013
+        title: Lei 12.865/2013
+        kind: law
+        official_url: https://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2013/Lei/L12865.htm
+      - id: bcb-150-2021
+        title: Resolução BCB 150/2021
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=150&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: bcb-195-2022
+        title: Resolução BCB 195/2022
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=195&tipo=Resolu%C3%A7%C3%A3o+BCB
+  pld-ft:
+    status: active
+    norms:
+      - id: lei-9613-1998
+        title: Lei 9.613/1998
+        kind: law
+        official_url: https://www.planalto.gov.br/ccivil_03/leis/l9613.htm
+      - id: bcb-3978-2020
+        title: Circular BCB 3.978/2020
+        kind: circular
+        official_url: https://normativos.bcb.gov.br/Lists/Normativos/Attachments/50905/Circ_3978_v5_P.pdf
+      - id: bcb-277-2022
+        title: Resolução BCB 277/2022
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=277&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: coaf-36-2021
+        title: Resolução COAF 36/2021
+        kind: resolution
+        official_url: https://www.gov.br/coaf/pt-br/acesso-a-informacao/Institucional/a-atividade-de-supervisao/regulacao/supervisao/normas-1/resolucao-coaf-no-36-de-10-de-marco-de-2021
+  cambio:
+    status: active
+    norms:
+      - id: bcb-277-2022
+        title: Resolução BCB 277/2022
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=277&tipo=Resolu%C3%A7%C3%A3o+BCB
+      - id: circ-3691-2013
+        title: Circular BCB 3.691/2013
+        kind: circular
+        official_url: https://normativos.bcb.gov.br/Lists/Normativos/Attachments/48815/Circ_3691_v27_P.pdf
+  credito:
+    status: active
+    norms:
+      - id: cmn-4558-2017
+        title: Resolução CMN 4.558/2017
+        kind: resolution
+        official_url: https://normativos.bcb.gov.br/Lists/Normativos/Attachments/50345/Res_4558_v2_L.pdf
+      - id: cmn-4966-2021
+        title: Resolução CMN 4.966/2021
+        kind: resolution
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=4966&tipo=Resolu%C3%A7%C3%A3o+CMN
+      - id: circ-3953-2019
+        title: Circular BCB 3.953/2019
+        kind: circular
+        official_url: https://normativos.bcb.gov.br/Lists/Normativos/Attachments/50799/Circ_3953_v2_P.pdf
+      - id: scr-doc3040
+        title: Instruções de Preenchimento do Doc 3040
+        kind: instruction
+        official_url: https://www.bcb.gov.br/content/estabilidadefinanceira/Leiaute_de_documentos/scrdoc3040/SCR_InstrucoesDePreenchimento_Doc3040.pdf
+  spb:
+    status: active
+    norms:
+      - id: lei-10214-2001
+        title: Lei 10.214/2001
+        kind: law
+        official_url: https://planalto.gov.br/ccivil_03/LEIS/LEIS_2001/L10214.htm
+  drex:
+    status: evolving
+    norms:
+      - id: drex-home
+        title: Drex - Real Digital
+        kind: portal
+        official_url: https://www.bcb.gov.br/drex
+      - id: drex-faq
+        title: FAQ - Drex - Real Digital
+        kind: faq
+        official_url: https://www.bcb.gov.br/estabilidadefinanceira/real_digital_faq
+    notes:
+      - "Nao ha norma final consolidada unica; usar as diretrizes e comunicados oficiais vigentes."
