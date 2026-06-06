@@ -1,0 +1,8 @@
+{
+  "evento": "INCLUSAO",
+  "status": "RECUSADA",
+  "data": {
+    "numero_pedido_negociacao_recebivel": 1002,
+    "descricao_motivo_recusa_pedido": "PRIORIDADE_DUPLICADA"
+  }
+}

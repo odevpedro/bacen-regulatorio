@@ -1,0 +1,23 @@
+{
+  "endToEndId": "E11111111202506011000XXXXXXXXXX",
+  "valor": 150.00,
+  "chave": "52998224725",
+  "tipoChave": "CPF",
+  "infoPagador": "Pagamento referente ao serviço #1234",
+  "pagador": {
+    "nome": "João Silva",
+    "cpf": "52998224725",
+    "ispb": "12345678",
+    "agencia": "0001",
+    "conta": "123456",
+    "tipoConta": "CACC"
+  },
+  "recebedor": {
+    "nome": "Loja XYZ LTDA",
+    "cnpj": "11222333000181",
+    "ispb": "87654321",
+    "agencia": "0002",
+    "conta": "654321",
+    "tipoConta": "CACC"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "dev123456",
+  "rtrId": "D11111111202506011000XXXXXXXXXX",
+  "valor": "150.00",
+  "motivo": "MD08_SOLICITACAO_PAGADOR",
+  "descricao": "Devolução solicitada pelo pagador",
+  "status": "DEVOLVIDO",
+  "horario": {
+    "solicitacao": "2025-06-02T09:00:00Z",
+    "liquidacao": "2025-06-02T09:00:05Z"
+  }
+}

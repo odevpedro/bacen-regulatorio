@@ -1,0 +1,14 @@
+{
+  "data": {
+    "permissions": [
+      "ACCOUNTS_READ",
+      "ACCOUNTS_BALANCES_READ",
+      "ACCOUNTS_TRANSACTIONS_READ",
+      "CREDIT_CARDS_ACCOUNTS_READ",
+      "CREDIT_CARDS_ACCOUNTS_BILLS_READ"
+    ],
+    "expirationDateTime": "2026-06-01T00:00:00Z",
+    "transactionFromDateTime": "2024-01-01T00:00:00Z",
+    "transactionToDateTime": "2025-06-01T00:00:00Z"
+  }
+}

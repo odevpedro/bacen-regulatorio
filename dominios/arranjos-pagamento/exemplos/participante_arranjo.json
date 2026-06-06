@@ -1,0 +1,20 @@
+{
+  "codigoArranjo": "VCC",
+  "descricao": "Visa Crédito à Vista",
+  "instituidor": {
+    "nome": "Visa do Brasil Empreendimentos Ltda",
+    "cnpj": "31476891000129"
+  },
+  "participante": {
+    "cnpj": "11222333000181",
+    "nome": "Banco Exemplo S.A.",
+    "tipo": "EMISSOR",
+    "dataIngresso": "2020-01-01"
+  },
+  "regras": {
+    "modalidade": "CREDITO",
+    "permiteParcelamento": true,
+    "prazoMaximoParcelas": 24,
+    "taxaIntercambioMaxima": 0.0230
+  }
+}

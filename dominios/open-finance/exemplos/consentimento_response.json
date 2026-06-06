@@ -1,0 +1,17 @@
+{
+  "data": {
+    "consentId": "urn:bancoex:C1DD33123",
+    "creationDateTime": "2025-06-01T10:00:00Z",
+    "expirationDateTime": "2026-06-01T00:00:00Z",
+    "statusUpdateDateTime": "2025-06-01T10:00:00Z",
+    "status": "AWAITING_AUTHORISATION",
+    "permissions": [
+      "ACCOUNTS_READ",
+      "ACCOUNTS_BALANCES_READ",
+      "ACCOUNTS_TRANSACTIONS_READ"
+    ],
+    "links": {
+      "self": "https://api.banco.com.br/open-banking/consents/v3/consents/urn:bancoex:C1DD33123"
+    }
+  }
+}

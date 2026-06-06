@@ -1,0 +1,20 @@
+{
+  "cliente": {
+    "cpf": "52998224725",
+    "nome": "João Silva",
+    "nivelRisco": "NORMAL",
+    "isPep": false
+  },
+  "operacao": {
+    "tipo": "DEPOSITO_ESPECIE",
+    "valor": 15000.00,
+    "dataHora": "2025-06-01T14:30:00",
+    "agencia": "0001",
+    "conta": "123456"
+  },
+  "analise": {
+    "alertas": ["ESPECIE_ACIMA_LIMITE", "ESPECIE_COMUNICACAO_COAF"],
+    "acaoRequerida": "COMUNICACAO_COAF",
+    "prazo": "dia util seguinte"
+  }
+}

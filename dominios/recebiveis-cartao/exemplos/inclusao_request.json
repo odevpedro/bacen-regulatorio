@@ -1,0 +1,15 @@
+{
+  "correlation_id": "550e8400-e29b-41d4-a716-446655440000",
+  "tipo_evento": "INCLUSAO",
+  "numero_pedido_negociacao_recebivel": 1001,
+  "sigla_sistema": "CIP",
+  "cpf_cnpj_solicitante": "52998224725",
+  "arranjos_pagamento": "VCC",
+  "cpf_cnpj_credenciadora": "11222333000181",
+  "cpf_cnpj_usuario_servico_pagamento": "52998224725",
+  "data_liquidacao": "2025-06-15",
+  "valor_garantia": 1500.00,
+  "prioridade": 1,
+  "indicador_interoperabilidade": "SI",
+  "valor_total_unidade": 50000.00
+}

@@ -1,0 +1,22 @@
+{
+  "revisao": 0,
+  "calendario": {
+    "criacao": "2025-06-01T10:00:00Z",
+    "expiracao": 3600
+  },
+  "devedor": {
+    "cpf": "52998224725",
+    "nome": "João Silva"
+  },
+  "valor": {
+    "original": "150.00",
+    "modalidadeAlteracao": 0
+  },
+  "chave": "empresa@banco.com.br",
+  "solicitacaoPagador": "Pagamento referente ao pedido #4321",
+  "infoAdicionais": [
+    { "nome": "Pedido", "valor": "#4321" }
+  ],
+  "txid": "7978c80d0a3f411fa18ef38d56dab234",
+  "status": "ATIVA"
+}

@@ -1,0 +1,10 @@
+{
+  "evento": "INCLUSAO",
+  "status": "ACEITA",
+  "data": {
+    "numero_controle_unico_negociacao_recebivel": "NCU2A3B4C5D6E7F8G9H01",
+    "numero_pedido_negociacao_recebivel": 1001,
+    "sigla_sistema": "CIP",
+    "data_hora_manutencao_registro": "2025-06-01T10:00:00"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "evento": "CANCELAMENTO",
+  "status": "ACEITA",
+  "data": {
+    "numero_pedido_negociacao_recebivel": 3001
+  }
+}
