@@ -19,12 +19,15 @@ Nao e uma implementacao de sistema completo — e uma base de consulta e ponto d
 | Item | Tecnologia |
 |------|-----------|
 | Runtime | Java 21 |
-| Build | Maven multi-modulo (6 modulos) |
+| Build | Maven multi-modulo (10 modulos) |
 | Testes | JUnit 5 + AssertJ |
 | CI/CD | GitHub Actions |
 | Publicacao | GitHub Packages |
 
 Sem Spring Boot — puro Java, sem framework, para maxima portabilidade.
+
+As evidencias normativas ficam organizadas em `docs/evidencias/`, com um indice central
+e uma pagina por modulo apontando para os endpoints oficiais usados como base de cada regra.
 
 ---
 
@@ -40,7 +43,8 @@ bacen_regulatorio/
 │   └── publish.yml                      (publicacao no GitHub Packages)
 ├── docs/
 │   ├── system-feature-flows.md
-│   └── data-model.md
+│   ├── data-model.md
+│   └── evidencias/                    (PDFs oficiais e indice por dominio)
 └── dominios/
     ├── commons/                         (utilitarios compartilhados entre dominios)
     ├── recebiveis-cartao/               (Res. 4.734, Circ. 3.952, 4.016, Res. BCB 264)
@@ -131,6 +135,37 @@ Monitoramento de operacoes atipicas, perfil de risco KYC, deteccao de fracioname
 ```
 
 Repositorio: `https://maven.pkg.github.com/odevpedro/bacen_regulatorio`
+
+### Uso na pratica
+
+```mermaid
+flowchart TD
+    U[Usuario / Sistema Externo] --> API[API da Aplicacao Consumidora]
+    API --> DTO[DTO / Request da Aplicacao]
+    DTO --> SVC[Service / Caso de Uso]
+
+    SVC --> LIB[Lib bacen-regulatorio]
+    LIB --> V1[Validators]
+    LIB --> V2[Enums]
+    LIB --> V3[Value Objects]
+
+    V1 --> OK{Valido?}
+    V2 --> OK
+    V3 --> OK
+
+    OK -- nao --> ERR[Retornar erro regulatorio]
+    OK -- sim --> MAP[Mapeamento para entidade local]
+    MAP --> ENT[Entidade da Aplicacao]
+    ENT --> DB[(Datasource da Aplicacao)]
+
+    DB --> SVC
+```
+
+Nesse fluxo:
+
+- a aplicacao consumidora continua dono da API, persistencia e integracoes;
+- a lib centraliza as regras regulatorias e os modelos canonicos de validacao;
+- o mapeamento para entidades e tabelas locais continua sendo responsabilidade da aplicacao.
 
 ### Build completo
 
