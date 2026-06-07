@@ -52,10 +52,12 @@ docs/
 
 | Regra | Classe | Norma |
 |-------|--------|-------|
+| Validação estrutural de consentimento | `ConsentimentoValidator.validarConsentimento` | Res. BCB 32 Art. 10 a 19 |
 | Validade máxima de 12 meses | `ConsentimentoValidator.validarValidade` | Res. BCB 32 Art. 12° |
 | Status deve ser AUTHORISED para uso | `ConsentimentoValidator.validarStatusParaUso` | Res. BCB 32 Art. 14° |
 | Permissões concedidas >= solicitadas | `ConsentimentoValidator.validarPermissoes` | Res. BCB 32 Art. 13° |
 | Dependências hierárquicas de permissões | `ConsentimentoValidator.validarDependenciasPermissoes` | Res. BCB 32 |
+| Acesso a dados com consentimento válido | `ConsentimentoValidator.validarAcesso` | Res. BCB 32 Art. 10 a 19 |
 | Verificação de consentimento ativo | `Consentimento.isAtivo` | Res. BCB 32 Art. 16° |
 
 ---
@@ -73,8 +75,8 @@ docs/
 ```java
 // Verificar se consentimento permite acesso a transações
 Consentimento c = new Consentimento(id, cpf, AUTHORISED, permissoes, criacao, expiracao);
-if (!c.isAtivo()) throw new ConsentimentoInativoException();
-if (!c.hasPermissao(ACCOUNTS_TRANSACTIONS_READ)) throw new PermissaoNegadaException();
+ConsentimentoValidator.validarAcesso(c, List.of(ACCOUNTS_TRANSACTIONS_READ))
+        .ifPresent(erro -> { throw new PermissaoNegadaException(erro); });
 ```
 
 ---

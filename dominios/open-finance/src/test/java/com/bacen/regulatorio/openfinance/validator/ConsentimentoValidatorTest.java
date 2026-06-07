@@ -2,6 +2,7 @@ package com.bacen.regulatorio.openfinance.validator;
 
 import com.bacen.regulatorio.openfinance.enums.PermissaoConsentimento;
 import com.bacen.regulatorio.openfinance.enums.StatusConsentimento;
+import com.bacen.regulatorio.openfinance.valueobject.Consentimento;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +43,62 @@ class ConsentimentoValidatorTest {
     void deveBloquearUsoDeConsentimentoRevogado() {
         assertThat(ConsentimentoValidator.validarStatusParaUso(
                 StatusConsentimento.REVOKED)).isPresent();
+    }
+
+    @Test @DisplayName("Res.BCB32 — consentimento completo e válido deve ser aceito")
+    void deveAceitarConsentimentoValido() {
+        Consentimento consentimento = new Consentimento(
+                "cons-001",
+                "52998224725",
+                StatusConsentimento.AUTHORISED,
+                List.of(PermissaoConsentimento.ACCOUNTS_READ, PermissaoConsentimento.ACCOUNTS_TRANSACTIONS_READ),
+                agora,
+                agora.plusMonths(6));
+
+        assertThat(ConsentimentoValidator.validarConsentimento(consentimento)).isEmpty();
+    }
+
+    @Test @DisplayName("Res.BCB32 — consentimento com CPF/CNPJ invalido deve ser rejeitado")
+    void deveRejeitarConsentimentoComCpfInvalido() {
+        Consentimento consentimento = new Consentimento(
+                "cons-002",
+                "12345678900",
+                StatusConsentimento.AUTHORISED,
+                List.of(PermissaoConsentimento.ACCOUNTS_READ),
+                agora,
+                agora.plusMonths(6));
+
+        assertThat(ConsentimentoValidator.validarConsentimento(consentimento)).isPresent();
+    }
+
+    @Test @DisplayName("Res.BCB32 — acesso com permissoes concedidas deve ser aceito")
+    void deveAceitarAcessoComConsentimentoAutorizado() {
+        Consentimento consentimento = new Consentimento(
+                "cons-003",
+                "52998224725",
+                StatusConsentimento.AUTHORISED,
+                List.of(PermissaoConsentimento.ACCOUNTS_READ, PermissaoConsentimento.ACCOUNTS_TRANSACTIONS_READ),
+                agora,
+                agora.plusMonths(6));
+
+        assertThat(ConsentimentoValidator.validarAcesso(
+                consentimento,
+                List.of(PermissaoConsentimento.ACCOUNTS_TRANSACTIONS_READ))).isEmpty();
+    }
+
+    @Test @DisplayName("Res.BCB32 — acesso com permissao fora do consentimento deve ser rejeitado")
+    void deveRejeitarAcessoComPermissaoNaoConcedida() {
+        Consentimento consentimento = new Consentimento(
+                "cons-004",
+                "52998224725",
+                StatusConsentimento.AUTHORISED,
+                List.of(PermissaoConsentimento.ACCOUNTS_READ),
+                agora,
+                agora.plusMonths(6));
+
+        assertThat(ConsentimentoValidator.validarAcesso(
+                consentimento,
+                List.of(PermissaoConsentimento.ACCOUNTS_TRANSACTIONS_READ))).isPresent();
     }
 
     @Test @DisplayName("Res.BCB32 — TRANSACTIONS_READ sem ACCOUNTS_READ deve falhar")

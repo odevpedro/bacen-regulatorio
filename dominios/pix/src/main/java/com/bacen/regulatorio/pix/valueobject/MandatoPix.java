@@ -50,6 +50,7 @@ public record MandatoPix(
 
     public boolean isAtivo() {
         return status == StatusMandatoPix.ATIVO
-                && (dataFim == null || !LocalDate.now().isAfter(dataFim));
+                && dataFim != null
+                && !LocalDate.now().isAfter(dataFim);
     }
 }

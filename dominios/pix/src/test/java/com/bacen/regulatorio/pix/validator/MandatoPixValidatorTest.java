@@ -25,6 +25,11 @@ class MandatoPixValidatorTest {
         assertThat(MandatoPixValidator.validarMandatoAtivo(mandato)).isEmpty();
     }
 
+    @Test @DisplayName("Res.BCB191 — mandato completo e valido deve ser aceito")
+    void deveAceitarMandatoCompletoValido() {
+        assertThat(MandatoPixValidator.validarMandato(mandato)).isEmpty();
+    }
+
     @Test @DisplayName("Res.BCB191 — mandato expirado deve ser rejeitado")
     void deveRejeitarMandatoExpirado() {
         var expirado = new MandatoPix("MAND002", "52998224725", "11222333000181",
@@ -33,6 +38,16 @@ class MandatoPixValidatorTest {
                 LocalDate.now().minusMonths(6), LocalDate.now().minusDays(1),
                 StatusMandatoPix.ATIVO);
         assertThat(MandatoPixValidator.validarMandatoAtivo(expirado)).isPresent();
+    }
+
+    @Test @DisplayName("Res.BCB191 — mandato com CPF invalido deve ser rejeitado")
+    void deveRejeitarMandatoComCpfInvalido() {
+        var invalido = new MandatoPix("MAND004", "12345678900", "11222333000181",
+                new BigDecimal("500.00"), null, 10,
+                PeriodicidadePixAutomatico.MENSAL,
+                LocalDate.now().minusMonths(1), LocalDate.now().plusYears(1),
+                StatusMandatoPix.ATIVO);
+        assertThat(MandatoPixValidator.validarMandato(invalido)).isPresent();
     }
 
     @Test @DisplayName("Res.BCB191 — valor dentro do limite deve ser aceito")
@@ -80,5 +95,23 @@ class MandatoPixValidatorTest {
                 LocalDate.now().minusMonths(1), LocalDate.now().plusYears(1),
                 StatusMandatoPix.CANCELADO_PAGADOR);
         assertThat(cancelado.isAtivo()).isFalse();
+    }
+
+    @Test @DisplayName("Res.BCB191 — cobranca completa valida deve ser aceita")
+    void deveAceitarCobrancaCompletaValida() {
+        assertThat(MandatoPixValidator.validarCobranca(
+                mandato,
+                new BigDecimal("300.00"),
+                new BigDecimal("1200.00"),
+                5)).isEmpty();
+    }
+
+    @Test @DisplayName("Res.BCB191 — cobranca acima do limite mensal deve ser rejeitada")
+    void deveRejeitarCobrancaAcimaDoLimiteMensal() {
+        assertThat(MandatoPixValidator.validarCobranca(
+                mandato,
+                new BigDecimal("300.00"),
+                new BigDecimal("1900.00"),
+                5)).isPresent();
     }
 }

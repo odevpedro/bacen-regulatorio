@@ -72,6 +72,8 @@ docs/
 | End-to-End ID (E{ISPB}{data}{hora}{seq}) | `EndToEndIdValidator` | Res. BCB 1 |
 | Txid (26 a 35 alfanumericos) | `TxidValidator` | Res. BCB 1 |
 | Payload QR Code EMVCo (TLV, GUI PIX, CRC) | `QrCodePayloadValidator` | Res. BCB 1 Anexo II |
+| Validacao estrutural de mandato | `MandatoPixValidator.validarMandato` | Res. BCB 191/2022 |
+| Validacao completa de cobranca recorrente | `MandatoPixValidator.validarCobranca` | Res. BCB 191/2022 |
 
 > Validacao de CPF/CNPJ delegada para `CpfCnpjValidator` no modulo `commons`.
 
@@ -101,6 +103,10 @@ EndToEndId e2e = new EndToEndId("E1234567820240101123456ABC");
 // Validar payload do QR Code
 QrCodePayloadValidator.validarPayload(payload)
     .ifPresent(erro -> recusarCobranca(erro));
+
+// Validar uma cobranca recorrente completa
+MandatoPixValidator.validarCobranca(mandato, valor, totalCobradoNoMes, quantidadeJaRealizada)
+    .ifPresent(erro -> recusarCobrancaRecorrente(erro));
 ```
 
 ---

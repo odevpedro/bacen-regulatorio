@@ -23,12 +23,13 @@ public record Consentimento(
         String consentId,
         String cpfCnpjUsuario,
         StatusConsentimento status,
-        List<PermissaoConsentimento> permissoes,
-        OffsetDateTime dataCriacao,
-        OffsetDateTime dataExpiracao
+    List<PermissaoConsentimento> permissoes,
+    OffsetDateTime dataCriacao,
+    OffsetDateTime dataExpiracao
 ) {
     public boolean isAtivo() {
         return status == StatusConsentimento.AUTHORISED
+                && dataExpiracao != null
                 && OffsetDateTime.now().isBefore(dataExpiracao);
     }
 

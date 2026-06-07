@@ -1,10 +1,13 @@
 package com.bacen.regulatorio.openfinance.validator;
 
+import com.bacen.regulatorio.commons.validator.CpfCnpjValidator;
 import com.bacen.regulatorio.openfinance.enums.PermissaoConsentimento;
 import com.bacen.regulatorio.openfinance.enums.StatusConsentimento;
+import com.bacen.regulatorio.openfinance.valueobject.Consentimento;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -26,6 +29,9 @@ public final class ConsentimentoValidator {
      * @return mensagem de erro ou Optional.empty() se válido
      */
     public static Optional<String> validarValidade(OffsetDateTime dataExpiracao, OffsetDateTime dataSolicitacao) {
+        if (dataSolicitacao == null || dataExpiracao == null) {
+            return Optional.of("Datas de solicitacao e expiracao sao obrigatorias");
+        }
         if (dataExpiracao.isBefore(dataSolicitacao) || dataExpiracao.isEqual(dataSolicitacao)) {
             return Optional.of("Data de expiração deve ser posterior à data de solicitação");
         }
@@ -40,6 +46,9 @@ public final class ConsentimentoValidator {
      * Apenas consentimentos AUTHORISED permitem compartilhamento de dados.
      */
     public static Optional<String> validarStatusParaUso(StatusConsentimento status) {
+        if (status == null) {
+            return Optional.of("Status do consentimento é obrigatório");
+        }
         return status == StatusConsentimento.AUTHORISED
                 ? Optional.empty()
                 : Optional.of("Consentimento não está autorizado. Status atual: " + status);
@@ -51,6 +60,15 @@ public final class ConsentimentoValidator {
     public static Optional<String> validarPermissoes(
             List<PermissaoConsentimento> solicitadas,
             List<PermissaoConsentimento> concedidas) {
+        if (solicitadas == null || solicitadas.isEmpty()) {
+            return Optional.of("Lista de permissoes solicitadas nao pode ser vazia");
+        }
+        if (concedidas == null || concedidas.isEmpty()) {
+            return Optional.of("Lista de permissoes concedidas nao pode ser vazia");
+        }
+        if (solicitadas.stream().anyMatch(Objects::isNull) || concedidas.stream().anyMatch(Objects::isNull)) {
+            return Optional.of("Listas de permissoes nao podem conter valores nulos");
+        }
         List<PermissaoConsentimento> naoAutorizadas = solicitadas.stream()
                 .filter(p -> !concedidas.contains(p))
                 .toList();
@@ -64,6 +82,12 @@ public final class ConsentimentoValidator {
      * Ex: ACCOUNTS_TRANSACTIONS_READ exige ACCOUNTS_READ.
      */
     public static Optional<String> validarDependenciasPermissoes(List<PermissaoConsentimento> permissoes) {
+        if (permissoes == null || permissoes.isEmpty()) {
+            return Optional.of("Lista de permissoes nao pode ser vazia");
+        }
+        if (permissoes.stream().anyMatch(Objects::isNull)) {
+            return Optional.of("Lista de permissoes nao pode conter valores nulos");
+        }
         if (permissoes.contains(PermissaoConsentimento.ACCOUNTS_TRANSACTIONS_READ)
                 && !permissoes.contains(PermissaoConsentimento.ACCOUNTS_READ)) {
             return Optional.of("ACCOUNTS_TRANSACTIONS_READ requer ACCOUNTS_READ");
@@ -95,5 +119,54 @@ public final class ConsentimentoValidator {
             return Optional.of("PENSION_OPEN_ENTITY_PORTABILITY_READ requer PENSION_OPEN_ENTITY_READ");
         }
         return Optional.empty();
+    }
+
+    /**
+     * Valida a estrutura minima de um consentimento recebido pela aplicacao.
+     */
+    public static Optional<String> validarConsentimento(Consentimento consentimento) {
+        if (consentimento == null) {
+            return Optional.of("Consentimento nao pode ser nulo");
+        }
+        if (consentimento.consentId() == null || consentimento.consentId().isBlank()) {
+            return Optional.of("Consentimento deve possuir consentId");
+        }
+        if (!CpfCnpjValidator.isValid(consentimento.cpfCnpjUsuario())) {
+            return Optional.of("CPF/CNPJ do usuario invalido");
+        }
+        if (consentimento.status() == null) {
+            return Optional.of("Status do consentimento e obrigatorio");
+        }
+        if (consentimento.permissoes() == null || consentimento.permissoes().isEmpty()) {
+            return Optional.of("Consentimento deve possuir ao menos uma permissao");
+        }
+        if (consentimento.permissoes().stream().anyMatch(Objects::isNull)) {
+            return Optional.of("Consentimento nao pode conter permissoes nulas");
+        }
+        return validarValidade(consentimento.dataExpiracao(), consentimento.dataCriacao());
+    }
+
+    /**
+     * Valida se um consentimento pode ser usado para acessar as permissoes solicitadas.
+     */
+    public static Optional<String> validarAcesso(
+            Consentimento consentimento,
+            List<PermissaoConsentimento> solicitadas) {
+        Optional<String> erro = validarConsentimento(consentimento);
+        if (erro.isPresent()) {
+            return erro;
+        }
+
+        erro = validarStatusParaUso(consentimento.status());
+        if (erro.isPresent()) {
+            return erro;
+        }
+
+        erro = validarPermissoes(solicitadas, consentimento.permissoes());
+        if (erro.isPresent()) {
+            return erro;
+        }
+
+        return validarDependenciasPermissoes(consentimento.permissoes());
     }
 }
