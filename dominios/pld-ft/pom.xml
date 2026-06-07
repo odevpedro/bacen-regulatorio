@@ -14,6 +14,7 @@
     <name>bacen-regulatorio :: PLD/FT</name>
 
     <dependencies>
+        <dependency><groupId>com.bacen.regulatorio</groupId><artifactId>bacen-regulatorio-commons</artifactId><version>${project.version}</version></dependency>
         <dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId></dependency>
         <dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId></dependency>
         <dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId></dependency>

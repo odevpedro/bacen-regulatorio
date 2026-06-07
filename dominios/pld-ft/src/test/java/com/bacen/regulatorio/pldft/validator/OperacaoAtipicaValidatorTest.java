@@ -2,10 +2,12 @@ package com.bacen.regulatorio.pldft.validator;
 
 import com.bacen.regulatorio.pldft.enums.NivelRiscoCliente;
 import com.bacen.regulatorio.pldft.enums.TipoOperacaoAtipica;
+import com.bacen.regulatorio.pldft.valueobject.PerfilRiscoCliente;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,5 +64,30 @@ class OperacaoAtipicaValidatorTest {
                 NivelRiscoCliente.REFORCADO,
                 new BigDecimal("1000.00")
         )).isFalse();
+    }
+
+    @Test @DisplayName("Circ.3978 — avaliacao completa deve consolidar alertas")
+    void deveConsolidarAlertasNaAvaliacaoCompleta() {
+        PerfilRiscoCliente perfil = new PerfilRiscoCliente(
+                "52998224725",
+                NivelRiscoCliente.NORMAL,
+                false,
+                List.of("BRASIL"),
+                LocalDate.now().minusMonths(1),
+                List.of("renda compativel"));
+
+        List<TipoOperacaoAtipica> alertas = OperacaoAtipicaValidator.avaliarOperacaoCompleta(
+                perfil,
+                new BigDecimal("12000.00"),
+                new BigDecimal("1000.00"),
+                List.of(new BigDecimal("4000.00"), new BigDecimal("3500.00"), new BigDecimal("3000.00")),
+                "IRA");
+
+        assertThat(alertas).contains(
+                TipoOperacaoAtipica.ESPECIE_ACIMA_LIMITE,
+                TipoOperacaoAtipica.ESPECIE_COMUNICACAO_COAF,
+                TipoOperacaoAtipica.INCOMPATIVEL_PERFIL,
+                TipoOperacaoAtipica.FRACIONAMENTO_SUSPEITO,
+                TipoOperacaoAtipica.JURISDICAO_ALTO_RISCO);
     }
 }

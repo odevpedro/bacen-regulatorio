@@ -34,6 +34,7 @@ src/
 │   │   ├── TipoOperacaoAtipica.java
 │   │   └── StatusComunicacaoCoaf.java
 │   ├── validator/
+│   │   ├── PerfilRiscoClienteValidator.java
 │   │   └── OperacaoAtipicaValidator.java
 │   └── valueobject/
 │       └── PerfilRiscoCliente.java
@@ -55,8 +56,11 @@ docs/
 | Espécie >= R$10.000 exige comunicação COAF | `OperacaoAtipicaValidator.avaliarOperacaoEspecie` | Circ. 3.978 Art. 37° |
 | Detecção de fracionamento suspeito | `OperacaoAtipicaValidator.isFracionamentoSuspeito` | Circ. 3.978 Anexo I |
 | Incompatibilidade com perfil econômico | `OperacaoAtipicaValidator.isIncompativelComPerfil` | Circ. 3.978 Art. 19° |
+| Avaliação consolidada de alertas | `OperacaoAtipicaValidator.avaliarOperacaoCompleta` | Circ. 3.978 |
 | Prazo de revisão de perfil por nível | `PerfilRiscoCliente.precisaRevisao` | Circ. 3.978 Art. 22° |
 | PEP sempre eleva nível para REFORCADO | `PerfilRiscoCliente.nivelEfetivo` | Res. BCB 277/2022 |
+| Validação estrutural de perfil | `PerfilRiscoClienteValidator.validarPerfil` | Circ. 3.978 |
+| Validação de perfil vigente | `PerfilRiscoClienteValidator.validarPerfilVigente` | Circ. 3.978 |
 
 ---
 
@@ -81,14 +85,24 @@ docs/
 ```
 
 ```java
+PerfilRiscoCliente perfil = new PerfilRiscoCliente(cpf, NORMAL, false, paises, dataRevisao, motivos);
+
 // Avaliar uma operação em espécie
 List<TipoOperacaoAtipica> alertas = OperacaoAtipicaValidator
     .avaliarOperacaoEspecie(new BigDecimal("12000.00"));
 // → [ESPECIE_ACIMA_LIMITE, ESPECIE_COMUNICACAO_COAF]
 
+// Avaliar um caso completo de PLD/FT
+List<TipoOperacaoAtipica> alertasCompletos = OperacaoAtipicaValidator.avaliarOperacaoCompleta(
+    perfil,
+    new BigDecimal("12000.00"),
+    new BigDecimal("1000.00"),
+    historicoValores,
+    "IRA");
+
 // Verificar se perfil precisa de revisão
-PerfilRiscoCliente perfil = new PerfilRiscoCliente(cpf, NORMAL, false, paises, dataRevisao, motivos);
-if (perfil.precisaRevisao()) iniciarKycAtualizado(perfil);
+PerfilRiscoClienteValidator.validarPerfilVigente(perfil)
+    .ifPresent(erro -> iniciarKycAtualizado(perfil));
 ```
 
 ---

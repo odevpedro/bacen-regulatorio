@@ -32,6 +32,9 @@ public record PerfilRiscoCliente(
      *   REFORCADO: 6 meses
      */
     public boolean precisaRevisao() {
+        if (nivelRisco == null || dataUltimaRevisao == null) {
+            return true;
+        }
         LocalDate limite = switch (nivelRisco) {
             case SIMPLIFICADO -> dataUltimaRevisao.plusYears(2);
             case NORMAL       -> dataUltimaRevisao.plusYears(1);
@@ -42,6 +45,9 @@ public record PerfilRiscoCliente(
 
     /** PEPs sempre exigem diligência reforçada. */
     public NivelRiscoCliente nivelEfetivo() {
-        return isPep ? NivelRiscoCliente.REFORCADO : nivelRisco;
+        if (isPep || nivelRisco == null) {
+            return NivelRiscoCliente.REFORCADO;
+        }
+        return nivelRisco;
     }
 }
